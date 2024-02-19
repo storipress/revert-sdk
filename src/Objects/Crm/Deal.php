@@ -9,7 +9,7 @@ use Storipress\Revert\Objects\RevertObject;
 
 class Deal extends RevertObject
 {
-    public string $amount;
+    public int $amount;
 
     public ?string $priority = null;
 
@@ -19,9 +19,9 @@ class Deal extends RevertObject
 
     public string $expectedCloseDate;
 
-    public string|bool $isWon;
+    public bool $isWon;
 
-    public string|float $probability;
+    public float $probability;
 
     public string $id;
 
