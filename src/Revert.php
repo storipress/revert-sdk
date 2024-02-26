@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Storipress\Revert;
 
 use Illuminate\Http\Client\Factory;
+use Storipress\Revert\Requests\Connection;
 use Storipress\Revert\Requests\Contact;
 use Storipress\Revert\Requests\Deal;
 use Storipress\Revert\Requests\Property;
@@ -23,6 +24,8 @@ class Revert
 
     protected readonly Property $property;
 
+    protected readonly Connection $connection;
+
     /**
      * Create a new revert instance.
      */
@@ -34,6 +37,8 @@ class Revert
         $this->deal = new Deal($this);
 
         $this->property = new Property($this);
+
+        $this->connection = new Connection($this);
     }
 
     /**
@@ -111,5 +116,10 @@ class Revert
     public function property(): Property
     {
         return $this->property;
+    }
+
+    public function connection(): Connection
+    {
+        return $this->connection;
     }
 }

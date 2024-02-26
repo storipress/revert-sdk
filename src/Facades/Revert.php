@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Storipress\Revert\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Storipress\Revert\Requests\Connection;
 use Storipress\Revert\Requests\Contact;
 use Storipress\Revert\Requests\Deal;
 use Storipress\Revert\Requests\Property;
@@ -20,6 +21,7 @@ use Storipress\Revert\Requests\Property;
  * @method static Contact contact()
  * @method static Deal deal()
  * @method static Property property()
+ * @method static Connection connection()
  */
 class Revert extends Facade
 {
