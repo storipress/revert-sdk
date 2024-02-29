@@ -8,6 +8,18 @@ use stdClass;
 use Storipress\Revert\Objects\Crm\Deal as DealObject;
 use Storipress\Revert\Objects\CursorPagination;
 
+/**
+ * @phpstan-type HubSpotDealSearch array{
+ *     filterGroups: array<int, array{
+ *         filters: array<int, array{
+ *             propertyName: string,
+ *             operator: 'EQ'|'NEQ'|'LT'|'LTE'|'GT'|'GTE'|'BETWEEN'|'IN'|'NOT_IN'|'HAS_PROPERTY'|'NOT_HAS_PROPERTY'|'CONTAINS_TOKEN'|'NOT_CONTAINS_TOKEN',
+ *             value?: string,
+ *             values?: array<int, string>,
+ *         }>,
+ *     }>,
+ * }
+ */
 class Deal extends Request
 {
     /**
@@ -60,5 +72,30 @@ class Deal extends Request
         );
 
         return DealObject::from($data->result);
+    }
+
+    /**
+     * Search for deals.
+     *
+     * @param  array{
+     *     fields?: string,
+     *     searchCriteria: HubSpotDealSearch,
+     * }  $options
+     * @return array<int,DealObject>
+     *
+     * @link https://docs.revert.dev/api-reference/api-reference/crm/deal/search-deals
+     */
+    public function search(array $options): array
+    {
+        $data = $this->request(
+            'post',
+            '/crm/deals/search',
+            $options,
+        );
+
+        return array_map(
+            fn (stdClass $item) => DealObject::from($item),
+            $data->results,
+        );
     }
 }
