@@ -48,17 +48,17 @@ abstract class Request
             ->{$method}($this->url($path), $options);
 
         if (! ($response instanceof Response)) {
-            throw new UnexpectedResponseData();
+            throw new UnexpectedResponseData(get_class($response) ?: gettype($response));
         }
 
         $data = $response->object();
 
         if ($isArray) {
             if (! is_array($data)) { // @phpstan-ignore-line
-                throw new UnexpectedResponseData();
+                throw new UnexpectedResponseData($response->body());
             }
         } elseif (! ($data instanceof stdClass)) {
-            throw new UnexpectedResponseData();
+            throw new UnexpectedResponseData($response->body());
         }
 
         if (! $response->successful() || ! $response->json('ok', true)) {
